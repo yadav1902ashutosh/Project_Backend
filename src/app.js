@@ -11,19 +11,23 @@ app.use(cors({
 }))
 
 //configuring different sources of inputs
-app.use(express.json({
-    limit: "16kb",
-}))
+app.use(express.json({ limit: "16kb"}))
 
-app.use(express.urlencoded({
-    extended: true,
-    limit: "16kb"
-}))
+app.use(express.urlencoded({ extended: true, limit: "16kb" }))
 
 //for public resources
 app.use(express.static("public"))
 
 //configuring secure cookies
 app.use(cookieParser())
+
+
+// routes import
+import userRouter from "./routes/user.routes.js";
+
+
+//routes declartion
+app.use("/api/v1/users", userRouter)
+
 
 export { app }
