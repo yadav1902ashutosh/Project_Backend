@@ -156,12 +156,12 @@ const logoutUser = asyncHandler(async(req, res)  => {
     await User.findByIdAndUpdate(
         req.user._id,
         {
-            $set: {
-                refreshToken: undefined
+            $unset: {
+                refreshToken: 1
             }
         },
         {
-            new: true
+            returnDocument: "after"
         }
     )
 
@@ -266,7 +266,7 @@ const updateAccountDetails = asyncHandler(async(req, res) => {
                email,
             }
         },
-        {new: true}
+        {returnDocument: "after"}
     ).select("-password")
 
     return res
@@ -291,7 +291,7 @@ const updateUserAvatar = asyncHandler(async(req, res) => {
                 avatar: avatar.url
             }
         },
-        {new:true}
+        {returnDocument: "after"}
     ).select("-password")
 
 
@@ -323,7 +323,7 @@ const updateUserCoverImage = asyncHandler(async(req, res) => {
                 coverImage: coverImage.url
             }
         },
-        {new:true}
+        {returnDocument: "after"}
     ).select("-password")
 
     return  response
